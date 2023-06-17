@@ -1,0 +1,16 @@
+.dash-board{
+    margin: 2px;
+    border:1px solid #000000;
+    height:200vh;
+}
+
+.banner-image{
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+}
+.product-list{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
