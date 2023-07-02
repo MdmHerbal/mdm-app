@@ -1,0 +1,80 @@
+.footer-section-bg{
+    background-color: #252525;
+    height: 250px;
+    /* border-top-left-radius: 20px;
+    border-top-right-radius: 20px; */
+    color: #ffffff;
+    font-family: "Roboto";
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-image: url(//cdn.shopify.com/s/files/1/0723/3945/6299/t/2/assets/snow-1.png?v=55535515282641567171676045509),
+    url(//cdn.shopify.com/s/files/1/0723/3945/6299/t/2/assets/snow-2.png?v=172925635096769504501676045509), 
+    url(//cdn.shopify.com/s/files/1/0723/3945/6299/t/2/assets/snow-2.png?v=172925635096769504501676045509);
+    animation: snow 20s linear infinite;
+    position: relative;
+    box-sizing:border-box;
+    
+  }
+  
+
+.foo-sec-con{
+    /* border: 1px solid red; */
+    width: 600px;
+    display: flex;
+   flex-direction: column;
+   
+}
+.email-input{
+    /* border: 1px solid red; */
+    display: flex;
+    justify-content: space-between;
+    color:#ffffff;
+    margin-bottom: 5px;
+
+}
+
+.foo-input{
+   flex-grow:1 ;
+   height: 30px;
+   background-color: transparent;
+   outline: none;
+   cursor: pointer;
+   border: none;
+   color: #ffffff;
+   padding-bottom: 0px;
+   font-size: 20px;
+  font-family: "Roboto";
+
+}
+
+
+.hr-line{
+    width: auto;
+}
+
+.sub-btn{
+    background-color: transparent;
+    color: #F26522;
+    outline: none;
+   cursor: pointer;
+   border: none;
+
+
+}
+
+.foo-details-con{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+   
+}
+
+.help-line-text{
+   margin-bottom: 10px;
+   margin-top: 10px;
+}
+
+
+
