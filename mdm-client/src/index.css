@@ -1,0 +1,179 @@
+/* body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+} */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400&display=swap');
+
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* font-family: 'Poppins', sans-serif; */
+/* font-family: 'Playfair Display', serif; */
+
+
+/* //navbar css */
+.navbar {
+  font-family: "Poppins", sans-serif;
+  font-size: 17px;
+  line-height: 26px;
+  text-transform: uppercase;
+  box-shadow: 0 8px 6px -6px gray;
+  --webkit-box-shadow: 0 8px 6px -6px gray;
+  border-bottom: solid gray !important;
+}
+
+.nav-link {
+  font-weight: 300 !important;
+}
+
+/* .active {
+  border-bottom: 2px solid black;
+} */
+
+.navbar-brand {
+  font-weight: 700;
+  font-family: "roboto", sans-serif;
+  letter-spacing: 3px;
+}
+
+.search-form {
+  margin-right: 10px;
+  margin-top: 4px;
+}
+.search-form input {
+  border: none;
+  border-radius: 0;
+}
+.search-form button {
+  background-color: #000000;
+  border-radius: 0;
+  color: white;
+}
+/* Footer css */
+
+.footer-section-bg{
+  background-color: #252525;
+  height: 250px;
+  /* border-top-left-radius: 20px;
+  border-top-right-radius: 20px; */
+  color: #ffffff;
+  font-family: "Roboto";
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-image: url(//cdn.shopify.com/s/files/1/0723/3945/6299/t/2/assets/snow-1.png?v=55535515282641567171676045509),
+  url(//cdn.shopify.com/s/files/1/0723/3945/6299/t/2/assets/snow-2.png?v=172925635096769504501676045509), 
+  url(//cdn.shopify.com/s/files/1/0723/3945/6299/t/2/assets/snow-2.png?v=172925635096769504501676045509);
+  animation: snow 20s linear infinite;
+  position: relative;
+  box-sizing:border-box;
+  
+}
+
+
+.foo-sec-con{
+  /* border: 1px solid red; */
+  width: 600px;
+  display: flex;
+ flex-direction: column;
+ 
+}
+.email-input{
+  /* border: 1px solid red; */
+  display: flex;
+  justify-content: space-between;
+  color:#ffffff;
+  margin-bottom: 5px;
+
+}
+
+.foo-input{
+ flex-grow:1 ;
+ height: 30px;
+ background-color: transparent;
+ outline: none;
+ cursor: pointer;
+ border: none;
+ color: #ffffff;
+ padding-bottom: 0px;
+ font-size: 20px;
+font-family: "Roboto";
+
+}
+
+
+.hr-line{
+  width: auto;
+}
+
+.sub-btn{
+  background-color: transparent;
+  color: #F26522;
+  outline: none;
+ cursor: pointer;
+ border: none;
+
+
+}
+
+.foo-details-con{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+ 
+}
+
+.help-line-text{
+ margin-bottom: 10px;
+ margin-top: 10px;
+}
+
+
+
+/* Footer Css */
+
+.footer {
+  color: white;
+  padding: 25px;
+  background: #000000; /* fallback for old browsers */
+  /* background: -webkit-linear-gradient(
+    to right,
+    #434343,
+    #000000
+  ); Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #434343, #000000);
+}
+
+.footer a {
+  text-decoration: none;
+  color: white;
+  padding: 10px;
+}
+
+.footer a:hover {
+  color: #ffefba;
+  border-bottom: 1px solid #ffefba;
+}
+
+/* Register */
+
+.register{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+}
