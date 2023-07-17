@@ -1,4 +1,3 @@
-import {compare} from "bcrypt";
 import {comparePassword, hashPassword} from "../helpers/authHelper.js";
 import userModel from "../models/userModel.js";
 import JWT from "jsonwebtoken";
@@ -59,23 +58,23 @@ export const registerController = async (req, res) => {
 // POST LOGIN
 
 export const loginController = async (req, res) => {
-    console.log(req.body, "first")
+    console.log(req)
     try {
         const {email, password} = req.body;
-        console.log(email, password, "Dhanunjayaaaaaa")
+
         if (!email || !password) {
             return res.status(404).send({success: false, message: "Invalid Email or Password"});
         }
 
         // check User
         const user = await userModel.findOne({email});
-        console.log(user)
+
         if (! user) {
             return res.status(404).send({success: false, message: "Email is not registered"});
         }
+
         // compare Password
         const match = await comparePassword(password, user.password);
-        console.log(match, "compare")
         if (! match) {
             return res.status(200).send({success: false, message: "Invalid Password"});
         }
@@ -87,6 +86,7 @@ export const loginController = async (req, res) => {
 
         res.status(200).send({
             success: true,
+            message: "login successfully",
             user: {
                 _id: user._id,
                 name: user.name,
@@ -102,8 +102,8 @@ export const loginController = async (req, res) => {
     }
 };
 
-// testController
 
+// testController
 export const testController = (req, res) => {
     res.send("Protected Route");
 };
