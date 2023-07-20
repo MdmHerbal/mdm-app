@@ -1,8 +1,22 @@
 .product-img {
-    width: 300px;
-    margin: 10px;
+    width: 250px;
+    margin: 5px;
 
 }
-.admin-product-card{
-    border:1px solid red;
+.admin-product-card-con{
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+   
+}
+
+.product-card{
+    height: 400px;
+    width: 250px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.products-con{
+    display: flex;
+    flex-wrap: wrap;
 }
