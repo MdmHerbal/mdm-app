@@ -1,0 +1,10 @@
+.details-con {
+  border: 1px solid red;
+  margin: 10px;
+}
+
+.detail-card-img {
+  width: 400px;
+  height: 400px;
+  object-fit: cover;
+}

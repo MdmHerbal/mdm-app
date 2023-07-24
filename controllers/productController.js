@@ -52,8 +52,8 @@ export const getpropductController = async (req, res) => {
       .find({})
       .populate("category")
       .select("-photo")
-      .limit(12)
-      .sort({createdAt: -1});
+      .limit(12);
+
     res.status(200).send({
       success: true,
       totalCount: products.length,
@@ -138,5 +138,29 @@ export const searchProductController = async (req, res) => {
     res.json(result);
   } catch (error) {
     console.log(error);
+  }
+};
+
+//similar Products
+export const relatedProductController = async (req, res) => {
+  try {
+    const {cid} = req.params;
+
+    const product = await productModel
+      .find({
+        category: cid,
+      })
+      .select("-photo")
+      .limit(3)
+      .populate("category");
+    res
+      .status(200)
+      .send({success: true, message: "Successfully Fetched", product});
+  } catch (error) {
+    res.status(400).send({
+      success: false,
+      message: "Error While Getting Related Products",
+      error,
+    });
   }
 };

@@ -6,7 +6,9 @@ import {
   getSingleProductController,
   productPhotoController,
   searchProductController,
+  relatedProductController,
 } from "../controllers/productController.js";
+
 import formidable from "express-formidable";
 
 const router = express.Router();
@@ -31,5 +33,8 @@ router.get("/product-photo/:pid", productPhotoController);
 
 // search product
 router.get("/search/:keyword", searchProductController);
+
+// similar Product
+router.get("/related-products/:cid", relatedProductController);
 
 export default router;

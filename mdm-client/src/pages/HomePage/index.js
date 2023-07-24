@@ -6,23 +6,22 @@ import "react-multi-carousel/lib/styles.css";
 import React, {useEffect, useState} from "react";
 import Layout from "../../components/Layout/Layout";
 import axios from "axios";
+import {NavLink} from "react-router-dom";
+import {useCart} from "../../context/cart";
+import {toast} from "react-hot-toast";
 
 export const HomePage = () => {
+  const [cart, setCart] = useCart();
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   const onHandleCategoryBtn = (categoryId) => {
-    if (categoryId === "all") {
-      // If the "all" category is selected, show all products
-      setFilteredProducts(products);
-    } else {
-      // Filter products by the selected category ID
-      const product = products.filter(
-        (each) => each.category._id === categoryId
-      );
-      setFilteredProducts(product);
-    }
+    console.log(categoryId);
+
+    // Filter products by the selected category ID
+    const product = products.filter((each) => each.category._id === categoryId);
+    setFilteredProducts(product);
   };
 
   const getAllcategories = async () => {
@@ -52,29 +51,57 @@ export const HomePage = () => {
             {each.name}
           </button>
         ))}
-        <button
-          className="category-btn"
-          onClick={() => onHandleCategoryBtn("all")}>
-          All
-        </button>
       </div>
       <div className="products-list">
-        {filteredProducts.map((each) => (
-          <div key={each._id}>
-            <div className="product-details-container">
-              <div className="card">
-                <img
-                  className="product--image"
-                  src={`/api/v1/product/product-photo/${each._id}`}
-                  alt={each.name}
-                />
-                <h2>{each.name}</h2>
-                <p className="price">{each.price}</p>
-                <button>Add to Cart</button>
+        {filteredProducts.length === 0
+          ? products.map((each) => (
+              <div key={each._id}>
+                <div className="product-details-container">
+                  <div className="card">
+                    <NavLink to={`product/${each.slug}`}>
+                      <img
+                        className="product--image"
+                        src={`/api/v1/product/product-photo/${each._id}`}
+                        alt={each.name}
+                      />
+                      <h2>{each.name}</h2>
+                      <p className="price">{each.price}</p>
+                    </NavLink>
+                    <button
+                      onClick={() => {
+                        setCart([...cart, each]);
+                        toast.success("Item Added to cart");
+                      }}>
+                      Add to Cart
+                    </button>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        ))}
+            ))
+          : filteredProducts.map((each) => (
+              <div key={each._id}>
+                <div className="product-details-container">
+                  <div className="card">
+                    <NavLink to={`product/${each.slug}`}>
+                      <img
+                        className="product--image"
+                        src={`/api/v1/product/product-photo/${each._id}`}
+                        alt={each.name}
+                      />
+                      <h2>{each.name}</h2>
+                      <p className="price">{each.price}</p>
+                    </NavLink>
+                    <button
+                      onClick={() => {
+                        setCart([...cart, each]);
+                        toast.success("Item Added to cart");
+                      }}>
+                      Add to Cart
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
       </div>
     </Layout>
   );

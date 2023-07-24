@@ -3,8 +3,13 @@ import {NavLink} from "react-router-dom";
 import {useAuth} from "../../context/auth";
 import {toast} from "react-hot-toast";
 import SearchInput from "../Form/SearchInput";
+import {useCart} from "../../context/cart";
+import {Badge} from "antd";
+import {BsCart4} from "react-icons/bs";
+
 export const Header = () => {
   const [auth, setAuth] = useAuth();
+  const [cart] = useCart();
 
   const onHandleLogout = () => {
     setAuth({
@@ -95,7 +100,9 @@ export const Header = () => {
               )}
               <li className="nav-item">
                 <NavLink to="/cart" className="nav-link ">
-                  Cart(0)
+                  <Badge count={cart?.length} showZero offset={[10, -5]}>
+                    <BsCart4 className="fs-5" />
+                  </Badge>
                 </NavLink>
               </li>
             </ul>
