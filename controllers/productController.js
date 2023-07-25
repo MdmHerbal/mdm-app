@@ -1,6 +1,20 @@
 import fs from "fs";
 import productModel from "../models/productModel.js";
 import slugify from "slugify";
+import braintree from "braintree";
+import orderModel from "../models/orderModel.js";
+
+// payment getway
+var gateway = new braintree.BraintreeGateway({
+  environment: braintree.Environment.Sandbox,
+  merchantId: "y4nkz46q4z45znqy",
+  publicKey: "yggggp23bhtxk7ch",
+  privateKey: "bfa9cffe7a9e7b982d0692eb7649745b",
+});
+
+console.log(process.env.BRAINTREE_MERCHANT_ID);
+console.log(process.env.BRAINTREE_PUBLIC_ID);
+console.log(process.env.BRAINTREE_PRIVATE_ID);
 
 export const createProductController = async (req, res) => {
   try {
@@ -162,5 +176,61 @@ export const relatedProductController = async (req, res) => {
       message: "Error While Getting Related Products",
       error,
     });
+  }
+};
+
+// payment
+// token
+export const braintreeTokenController = async (req, res) => {
+  try {
+    gateway.clientToken.generate({}, (err, response) => {
+      if (err) {
+        // Proper error handling for errors that occur in the callback
+        console.log(err); // Optional: Log the error for debugging purposes
+        res.status(500).send({error: "Failed to generate client token."});
+      } else {
+        res.send(response);
+      }
+    });
+  } catch (error) {
+    // This catch block won't catch errors from the callback, only synchronous errors.
+    // If you expect any errors here, you can add additional error handling.
+    console.log(error);
+    res.status(500).send({error: "An unexpected error occurred."});
+  }
+};
+
+// payment
+export const braintreePaymentController = async (req, res) => {
+  try {
+    const {cart, nonce} = req.body;
+    let total = 0;
+    cart.map((i) => {
+      total += i.price;
+    });
+
+    let newTransaction = gateway.transaction.sale(
+      {
+        amount: total,
+        paymentMethodNonce: nonce,
+        options: {
+          submitForSettlement: true,
+        },
+      },
+      function (error, result) {
+        if (result) {
+          let order = new orderModel({
+            products: cart,
+            payment: result,
+            buyer: req.user._id,
+          }).save();
+          res.json({ok: true});
+        } else {
+          res.status(500).send(error);
+        }
+      }
+    );
+  } catch (error) {
+    console.log(error);
   }
 };

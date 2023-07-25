@@ -2,7 +2,6 @@
 // import "react-slick/slick/slick-theme.css";
 import "./index.css";
 import "react-multi-carousel/lib/styles.css";
-
 import React, {useEffect, useState} from "react";
 import Layout from "../../components/Layout/Layout";
 import axios from "axios";
@@ -41,7 +40,9 @@ export const HomePage = () => {
 
   return (
     <Layout title={"All Products - Best Offers"}>
-      <div className="home-banner"></div>
+      <div className="home-banner">
+        <img src="/images/banner.jpg" alt="banner" className="banner-img" />
+      </div>
       <div className="categorys-container">
         {categories.map((each) => (
           <button
@@ -94,6 +95,10 @@ export const HomePage = () => {
                     <button
                       onClick={() => {
                         setCart([...cart, each]);
+                        localStorage.setItem(
+                          "cart",
+                          JSON.stringify([...cart, each])
+                        );
                         toast.success("Item Added to cart");
                       }}>
                       Add to Cart
