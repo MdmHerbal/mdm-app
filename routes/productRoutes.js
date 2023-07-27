@@ -44,6 +44,6 @@ router.get("/related-products/:cid", relatedProductController);
 router.get("/braintree/token", braintreeTokenController);
 
 // payment
-router.post("/braintree/payment", braintreePaymentController);
+router.post("/braintree/payment", requireSignIn, braintreePaymentController);
 
 export default router;

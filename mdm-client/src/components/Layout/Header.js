@@ -39,8 +39,9 @@ export const Header = () => {
             <NavLink to="" className="navbar-brand">
               MDM HERBAL PRODUCTS
             </NavLink>
-            <SearchInput />
+
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+              <SearchInput className="col-md-none" />
               <li className="nav-item">
                 <NavLink to="/" className="nav-link active" aria-current="page">
                   Home

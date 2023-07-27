@@ -35,7 +35,7 @@ const Products = () => {
             <div className="products-con">
               {products.map((each) => (
                 <ul key={each._id} className="admin-product-card-con">
-                  <li className="product-card">
+                  <li>
                     <div>
                       <img
                         src={`/api/v1/product/product-photo/${each._id}`}

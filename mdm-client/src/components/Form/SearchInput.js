@@ -22,13 +22,13 @@ const SearchInput = () => {
     <div>
       <form className="d-flex" role="search" onSubmit={handleSubmit}>
         <input
-          className="form-control me-2"
+          class="form-control me-2"
           type="search"
           placeholder="Search"
           aria-label="Search"
           onChange={(e) => setValue({...value, keyword: e.target.value})}
         />
-        <button className="btn btn-outline-success" type="submit">
+        <button class="btn btn-outline-success h-20" type="submit">
           Search
         </button>
       </form>
