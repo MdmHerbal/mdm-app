@@ -253,7 +253,8 @@ const CartPage = () => {
         cart,
       });
 
-      console.log(data);
+      console.log("payment", data);
+      console.log("cart", cart);
     } catch (error) {
       console.log(error);
     }

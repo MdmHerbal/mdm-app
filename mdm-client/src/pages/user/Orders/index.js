@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import UserMenu from "../../../components/Layout/UserMenu";
 import Layout from "../../../components/Layout/Layout";
 import {useAuth} from "../../../context/auth";
+import moment from "moment";
 import axios from "axios";
 import "./index.css";
 
@@ -11,6 +12,7 @@ const Orders = () => {
 
   const getAllOrders = async () => {
     const {data} = await axios.get("/api/v1/auth/orders");
+    console.log(data);
     setOrders(data);
   };
 
@@ -27,24 +29,24 @@ const Orders = () => {
           </div>
           <div className="col-md-9">
             <h3>All Orders</h3>
-            {orders.map((each) => (
+            {orders?.map((o, i) => (
               <table>
                 <tr>
                   <td>#</td>
-                  <td>{each?.status}</td>
-                  <td>{each?.buyer?.name}</td>
-                  <td>Orders</td>
-                  <td>Payment</td>
-                  <td>Quantity</td>
+                  <th>Status</th>
+                  <th>Buyer</th>
+                  <th>date</th>
+                  <th>Payment</th>
+                  <th>Quantity</th>
                 </tr>
                 <tbody>
                   <tr>
-                    <td></td>
-                    <td>{each.status}</td>
-                    <td>{each.bu}</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>{i + 1}</td>
+                    <td>{o?.status}</td>
+                    <td>{o?.buyer?.name}</td>
+                    <td>{moment(o?.createAt).fromNow()}</td>
+                    <td>{o?.payment.success ? "Success" : "Failed"}</td>
+                    <td>{o?.products?.length}</td>
                   </tr>
                 </tbody>
               </table>

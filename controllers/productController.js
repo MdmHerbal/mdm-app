@@ -12,10 +12,6 @@ var gateway = new braintree.BraintreeGateway({
   privateKey: "bfa9cffe7a9e7b982d0692eb7649745b",
 });
 
-console.log(process.env.BRAINTREE_MERCHANT_ID);
-console.log(process.env.BRAINTREE_PUBLIC_ID);
-console.log(process.env.BRAINTREE_PRIVATE_ID);
-
 export const createProductController = async (req, res) => {
   try {
     const {name, description, price, category, quantity, shipping} = req.fields;
@@ -201,6 +197,39 @@ export const braintreeTokenController = async (req, res) => {
 };
 
 // payment
+// export const braintreePaymentController = async (req, res) => {
+//   try {
+//     const {cart, nonce} = req.body;
+//     let total = cart.reduce((acc, item) => acc + item.price, 0); // Use reduce to calculate the total price.
+
+//     const result = await gateway.transaction.sale({
+//       amount: total,
+//       paymentMethodNonce: nonce,
+//       options: {
+//         submitForSettlement: true,
+//       },
+//     });
+
+//     if (result.success) {
+//       // Payment successful
+//       const order = new orderModel({
+//         products: cart,
+//         payment: result.transaction,
+//         buyer: req.user._id,
+//       });
+
+//       await order.save();
+//       res.json({ok: true});
+//     } else {
+//       // Payment failed
+//       res.status(500).send(result.message || "Payment failed");
+//     }
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).send("An error occurred");
+//   }
+// };
+
 export const braintreePaymentController = async (req, res) => {
   try {
     const {cart, nonce} = req.body;
@@ -221,7 +250,7 @@ export const braintreePaymentController = async (req, res) => {
         if (result) {
           let order = new orderModel({
             products: cart,
-            payment: result,
+            payment: result.transaction,
             buyer: req.user._id,
           }).save();
           res.json({ok: true});

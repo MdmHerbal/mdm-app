@@ -3,6 +3,8 @@ import {
   registerController,
   loginController,
   getOrdersController,
+  getAllOrdersController,
+  orderStatusController,
 } from "../controllers/authController.js";
 
 import {requireSignIn, isAdmin} from "../moddlewares/authMiddleware.js";
@@ -30,4 +32,14 @@ router.get("/admin-auth", requireSignIn, isAdmin, (req, res) => {
 // get Orders
 router.get("/orders", requireSignIn, getOrdersController);
 
+// all Orders
+router.get("/all-orders", requireSignIn, isAdmin, getAllOrdersController);
+
+// Order Status code
+router.put(
+  "/status-update/:orderId",
+  requireSignIn,
+  isAdmin,
+  orderStatusController
+);
 export default router;

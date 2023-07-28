@@ -18,6 +18,7 @@ import Products from "./pages/Admin/Products/index.js";
 import Search from "./pages/Search";
 import ProductDetails from "./pages/ProductDetails";
 import CartPage from "./pages/CartPage";
+import AdminOrders from "./pages/Admin/AdminOrders";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
           <Route path="admin/users" element={<Users />} />
           <Route path="admin/create-product" element={<CreateProduct />} />
           <Route path="admin/products" element={<Products />} />
+          <Route path="admin/admin-orders" element={<AdminOrders />} />
         </Route>
 
         <Route path="/register" element={<Register />} />
