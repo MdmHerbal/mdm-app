@@ -284,19 +284,41 @@ export const HomePage = () => {
     localStorage.setItem("productCount", JSON.stringify(productCount));
   }, [productCount]);
 
+  const customAxios = axios.create({
+    baseURL: "http://localhost:3000", // Set your base URL here
+    headers: {
+      // Only include the headers you want for this instance
+      Accept: "application/json, text/plain, */*",
+      // "User-Agent":
+      //   "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Mobile Safari/537.36",
+      // "Accept-Encoding": "gzip, deflate, br",
+      // "Accept-Language": "en-US,en;q=0.9",
+      // Any other headers you want to include, e.g., "Authorization", etc.
+    },
+  });
+
   const fetchCategories = async () => {
-    const {data} = await axios.get("/api/v1/category/get-category");
-    setCategories(data.category);
+    try {
+      const {data} = await customAxios.get("/api/v1/category/get-category");
+      console.log(data);
+      setCategories(data.category);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const fetchProducts = async () => {
-    const {data} = await axios.get("/api/v1/product/get-products");
-    setProducts(data.products);
+    try {
+      const {data} = await customAxios.get("/api/v1/product/get-products");
+      console.log(data);
+      setProducts(data.products);
+    } catch (error) {}
   };
 
   useEffect(() => {
     fetchCategories();
     fetchProducts();
+    // eslint-disable-next-line
   }, []);
 
   const onHandleCategoryBtn = (categoryId) => {
