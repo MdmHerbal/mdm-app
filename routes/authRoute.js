@@ -19,8 +19,13 @@ router.post("/register", registerController);
 // LOGIN || POST
 router.post("/login", loginController);
 
+// // Protected user Route Auth
+// router.get("/user-auth", requireSignIn, (req, res) => {
+//   res.status(200).send({ok: true});
+// });
+
 // Protected user Route Auth
-router.get("/user-auth", requireSignIn, (req, res) => {
+router.get("/user-auth", (req, res) => {
   res.status(200).send({ok: true});
 });
 

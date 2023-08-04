@@ -3,14 +3,8 @@ import productModel from "../models/productModel.js";
 import slugify from "slugify";
 import braintree from "braintree";
 import orderModel from "../models/orderModel.js";
-
-// payment getway
-var gateway = new braintree.BraintreeGateway({
-  environment: braintree.Environment.Sandbox,
-  merchantId: "y4nkz46q4z45znqy",
-  publicKey: "yggggp23bhtxk7ch",
-  privateKey: "bfa9cffe7a9e7b982d0692eb7649745b",
-});
+import Razorpay from "razorpay";
+import shortid from "shortid";
 
 export const createProductController = async (req, res) => {
   try {
@@ -105,6 +99,7 @@ export const getFilteredProductsController = (req, res) => {
 // product photo
 export const productPhotoController = async (req, res) => {
   try {
+    console.log(req.params.pid);
     const product = await productModel.findById(req.params.pid).select("photo");
     if (product.photo.data) {
       res.set("content-type", product.photo.contentType);
@@ -133,6 +128,36 @@ export const deleteProductController = async (req, res) => {
   }
 };
 
+// Controller to update productPrice and totalPrice in an order
+// export const updateOrderPricesController = async (req, res) => {
+//   const {orderId} = req.params;
+//   const {productPrice, totalPrice} = req.body;
+
+//   try {
+//     const order = await orderModel.findById(orderId);
+
+//     if (!order) {
+//       return res.status(404).json({error: "Order not found"});
+//     }
+
+//     // Update the productPrice and totalPrice fields in the order
+//     order.productPrice = productPrice;
+//     order.totalPrice = totalPrice;
+//     await order.save();
+
+//     return res.status(200).json({
+//       success: true,
+//       message: "Order prices updated successfully",
+//       order,
+//     });
+//   } catch (error) {
+//     console.log(error);
+//     return res
+//       .status(500)
+//       .json({success: false, error, message: "Error updating order prices"});
+//   }
+// };
+
 //search products
 export const searchProductController = async (req, res) => {
   try {
@@ -154,8 +179,8 @@ export const searchProductController = async (req, res) => {
 //similar Products
 export const relatedProductController = async (req, res) => {
   try {
+    // const {cid} = req.params;
     const {cid} = req.params;
-
     const product = await productModel
       .find({
         category: cid,
@@ -196,70 +221,42 @@ export const braintreeTokenController = async (req, res) => {
   }
 };
 
-// payment
-// export const braintreePaymentController = async (req, res) => {
-//   try {
-//     const {cart, nonce} = req.body;
-//     let total = cart.reduce((acc, item) => acc + item.price, 0); // Use reduce to calculate the total price.
-
-//     const result = await gateway.transaction.sale({
-//       amount: total,
-//       paymentMethodNonce: nonce,
-//       options: {
-//         submitForSettlement: true,
-//       },
-//     });
-
-//     if (result.success) {
-//       // Payment successful
-//       const order = new orderModel({
-//         products: cart,
-//         payment: result.transaction,
-//         buyer: req.user._id,
-//       });
-
-//       await order.save();
-//       res.json({ok: true});
-//     } else {
-//       // Payment failed
-//       res.status(500).send(result.message || "Payment failed");
-//     }
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).send("An error occurred");
-//   }
-// };
-
-export const braintreePaymentController = async (req, res) => {
+// Razorpay
+export const razorpayPaymentController = async (req, res) => {
   try {
-    const {cart, nonce} = req.body;
-    let total = 0;
-    cart.map((i) => {
-      total += i.price;
+    const {amount, cart} = req.body;
+    const payment_capture = 1;
+    var instance = new Razorpay({
+      key_id: "rzp_test_gmvFSAhhLN8Hh7",
+      key_secret: "CG2sMocHkWqoCgkIXrw1Ojeb",
     });
 
-    let newTransaction = gateway.transaction.sale(
-      {
-        amount: total,
-        paymentMethodNonce: nonce,
-        options: {
-          submitForSettlement: true,
-        },
-      },
-      function (error, result) {
-        if (result) {
-          let order = new orderModel({
-            products: cart,
-            payment: result.transaction,
-            buyer: req.user._id,
-          }).save();
-          res.json({ok: true});
-        } else {
-          res.status(500).send(error);
-        }
-      }
-    );
+    const productDetails = await instance.orders.create({
+      amount: amount,
+      currency: "INR",
+      receipt: shortid.generate(),
+      payment_capture,
+    });
+    // console.log(productDetails.status);
+    // let order;
+    // if (productDetails.status) {
+    //   order = new orderModel({
+    //     products: cart,
+    //     payment: productDetails,
+    //     buyer: req.user._id,
+    //   }).save();
+    // }
+
+    const order = new orderModel({
+      products: cart,
+      payment: productDetails,
+      buyer: req.user._id,
+    }).save();
+
+    res
+      .status(201)
+      .json({success: true, productDetails, amount, id: order.id, order});
   } catch (error) {
-    console.log(error);
+    res.status(500).send({message: false, error});
   }
 };

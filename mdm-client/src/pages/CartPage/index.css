@@ -17,5 +17,49 @@
 
 .delete-icon {
   font-size: 25px;
+  font-size: 25px;
   color: red;
+}
+
+/* cart.css */
+.cart-page {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.cart-item-bg {
+  display: flex;
+  align-items: center;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.cart-item-bg img {
+  margin-right: 10px;
+  object-fit: cover;
+  width: 250px;
+}
+
+.cart-input {
+  width: 50px;
+  text-align: center;
+}
+
+.card {
+  margin-top: 20px;
+}
+
+/* Add animation keyframes */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

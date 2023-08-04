@@ -33,12 +33,16 @@ app.get("/", (req, res) => {
   res.send({message: "welcome e commerce app"});
 });
 
-const port = process.env.PORT || 8080;
+// const port = process.env.PORT || 3000;
 // console.log(process.env.PORT);
 
-app.listen(port, () => {
-  console.log(
-    `Server running on ${process.env.DEV_MODE} mode on port ${port}`.bgCyan
-      .white
-  );
+// app.listen(3000, () => {
+//   console.log(
+//     `Server running on ${process.env.DEV_MODE} mode on port ${port}`.bgCyan
+//       .white
+//   );
+// });
+
+app.listen(8080, () => {
+  console.log("Server running on dev mode on port 8080".bgCyan.white);
 });

@@ -300,7 +300,7 @@ export const HomePage = () => {
   const fetchCategories = async () => {
     try {
       const {data} = await customAxios.get("/api/v1/category/get-category");
-      console.log(data);
+
       setCategories(data.category);
     } catch (error) {
       console.log(error);
@@ -310,7 +310,7 @@ export const HomePage = () => {
   const fetchProducts = async () => {
     try {
       const {data} = await customAxios.get("/api/v1/product/get-products");
-      console.log(data);
+
       setProducts(data.products);
     } catch (error) {}
   };

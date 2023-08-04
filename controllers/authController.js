@@ -91,9 +91,8 @@ export const loginController = async (req, res) => {
         _id: user._id,
       },
       process.env.JWT_SECRET,
-      {expiresIn: "7d"}
+      {expiresIn: "10d"}
     );
-
     res.status(200).send({
       success: true,
       message: "login successfully",
@@ -115,18 +114,21 @@ export const loginController = async (req, res) => {
 // Orders Controller
 export const getOrdersController = async (req, res) => {
   try {
+    // Assuming you have imported the Order model correctly.
+
     const orders = await orderModel
       .find({buyer: req.user._id})
       .populate("products", "-photo")
       .populate("buyer", "name");
-    console.log(orders);
+
     res.json(orders);
   } catch (error) {
     console.log(error);
-    res.status(400).send({success: false, message: error});
+    res
+      .status(500)
+      .json({success: false, message: "Failed to retrieve orders."});
   }
 };
-
 // All Orders Controller
 export const getAllOrdersController = async (req, res) => {
   try {
@@ -147,8 +149,6 @@ export const orderStatusController = async (req, res) => {
   try {
     const {orderId} = req.params;
     const {status} = req.body;
-    console.log(orderId);
-    console.log(status);
 
     const orders = await orderModel.findByIdAndUpdate(
       orderId,

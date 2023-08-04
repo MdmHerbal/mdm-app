@@ -7,15 +7,19 @@ import {BrowserRouter} from "react-router-dom";
 import {AuthProvider} from "./context/auth";
 import {SearchProvider} from "./context/search";
 import {CartProvider} from "./context/cart";
+import {PriceContextProvider} from "./context/price";
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <AuthProvider>
     <SearchProvider>
       <CartProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
+        <PriceContextProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </PriceContextProvider>
       </CartProvider>
     </SearchProvider>
   </AuthProvider>

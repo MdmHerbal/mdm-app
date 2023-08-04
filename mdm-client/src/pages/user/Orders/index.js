@@ -12,7 +12,7 @@ const Orders = () => {
 
   const getAllOrders = async () => {
     const {data} = await axios.get("/api/v1/auth/orders");
-    console.log(data);
+    console.log("impData", data);
     setOrders(data);
   };
 
@@ -29,28 +29,36 @@ const Orders = () => {
           </div>
           <div className="col-md-9">
             <h3>All Orders</h3>
-            {orders?.map((o, i) => (
-              <table>
-                <tr>
-                  <td>#</td>
-                  <th>Status</th>
-                  <th>Buyer</th>
-                  <th>date</th>
-                  <th>Payment</th>
-                  <th>Quantity</th>
-                </tr>
-                <tbody>
-                  <tr>
-                    <td>{i + 1}</td>
-                    <td>{o?.status}</td>
-                    <td>{o?.buyer?.name}</td>
-                    <td>{moment(o?.createAt).fromNow()}</td>
-                    <td>{o?.payment.success ? "Success" : "Failed"}</td>
-                    <td>{o?.products?.length}</td>
-                  </tr>
-                </tbody>
-              </table>
-            ))}
+            {orders?.length >= 1 ? (
+              <>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Status</th>
+                      <th>Buyer</th>
+                      <th>Date</th>
+                      <th>Payment</th>
+                      <th>Quantity</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {orders?.map((o, i) => (
+                      <tr key={o._id}>
+                        <td>{i + 1}</td>
+                        <td>{o?.status}</td>
+                        <td>{o?.buyer?.name}</td>
+                        <td>{moment(o?.createAt).fromNow()}</td>
+                        <td>{o?.payment?.success ? "Success" : "Failed"}</td>
+                        <td>{o?.products?.length}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </>
+            ) : (
+              <h1>No Orders</h1>
+            )}
           </div>
         </div>
       </div>
